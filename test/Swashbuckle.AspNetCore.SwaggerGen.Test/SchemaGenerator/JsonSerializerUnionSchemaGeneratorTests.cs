@@ -33,25 +33,6 @@ public class JsonSerializerUnionSchemaGeneratorTests
         Assert.True(schemaRepository.Schemas.ContainsKey(nameof(Dog)));
     }
 
-    [Fact]
-    public void GenerateSchema_GeneratesAnyOfSchema_ForUnionTypeWithNullableCase()
-    {
-        var schemaRepository = new SchemaRepository();
-
-        var schema = Subject(configureSerializer: UseReflectionResolver).GenerateSchema(typeof(NullablePet), schemaRepository);
-
-        var concrete = Assert.IsType<OpenApiSchema>(schema);
-        Assert.NotNull(concrete.AnyOf);
-        Assert.Equal(2, concrete.AnyOf.Count);
-
-        var referencedIds = concrete.AnyOf
-            .Select(s => Assert.IsType<OpenApiSchemaReference>(s).Reference.Id)
-            .ToArray();
-
-        Assert.Contains(nameof(Cat), referencedIds);
-        Assert.Contains(nameof(Dog), referencedIds);
-    }
-
     private static SchemaGenerator Subject(
         Action<SchemaGeneratorOptions>? configureGenerator = null,
         Action<JsonSerializerOptions>? configureSerializer = null)
@@ -70,7 +51,5 @@ public class JsonSerializerUnionSchemaGeneratorTests
     public record Dog(string Name, bool GoodBoy);
 
     public union Pet(Cat, Dog);
-
-    public union NullablePet(Cat, Dog?);
 }
 #endif

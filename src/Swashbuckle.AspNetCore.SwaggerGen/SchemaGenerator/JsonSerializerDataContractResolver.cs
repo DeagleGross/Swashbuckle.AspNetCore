@@ -112,7 +112,7 @@ public class JsonSerializerDataContractResolver : ISerializerDataContractResolve
     // Detects C# union types (introduced in .NET 11). System.Text.Json represents a union
     // transparently (no discriminator) as an "anyOf" of its case types, which the schema
     // generator mirrors. Returns false for any non-union type or if metadata is unavailable.
-    internal bool TryGetUnionCaseTypes(Type type, out IReadOnlyList<(Type CaseType, bool IsNullable)> cases)
+    internal bool TryGetUnionCaseTypes(Type type, out IReadOnlyList<Type> cases)
     {
         cases = null;
 
@@ -131,7 +131,7 @@ public class JsonSerializerDataContractResolver : ISerializerDataContractResolve
             return false;
         }
 
-        cases = [.. typeInfo.UnionCases.Select(static c => (c.CaseType, c.IsNullable))];
+        cases = [.. typeInfo.UnionCases.Select(static c => c.CaseType)];
         return true;
     }
 #endif

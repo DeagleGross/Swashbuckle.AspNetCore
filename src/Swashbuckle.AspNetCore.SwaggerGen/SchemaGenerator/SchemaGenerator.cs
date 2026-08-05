@@ -216,7 +216,7 @@ public class SchemaGenerator(
         {
             schema = new OpenApiSchema
             {
-                AnyOf = [.. cases.Select(c => GenerateSchema(c.CaseType, schemaRepository))],
+                AnyOf = [.. cases.Select(c => GenerateSchema(c, schemaRepository))],
             };
             return true;
         }
