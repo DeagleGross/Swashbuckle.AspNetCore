@@ -9,6 +9,11 @@
     <PackageTags>swagger;openapi;documentation;discovery;help;webapi;aspnet;aspnetcore</PackageTags>
     <SignAssembly>true</SignAssembly>
     <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::VersionGreaterThanOrEquals('$(NETCoreSdkVersion)', '11.0'))">$(TargetFrameworks);net11.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net11.0' ">
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

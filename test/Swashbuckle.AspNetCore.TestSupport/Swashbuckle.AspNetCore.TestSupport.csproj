@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::VersionGreaterThanOrEquals('$(NETCoreSdkVersion)', '11.0'))">$(TargetFrameworks);net11.0</TargetFrameworks>
+    <LangVersion Condition=" '$(TargetFramework)' == 'net11.0' ">preview</LangVersion>
     <IsPackable>false</IsPackable>
     <IsTestProject>false</IsTestProject>
     <VersionPrefix>1.0.0</VersionPrefix>
